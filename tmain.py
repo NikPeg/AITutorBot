@@ -1,9 +1,9 @@
 import os
 from openai import OpenAI
-from data.config import API_KEY
+from data.config import API_TOKEN
 
 
-client = OpenAI(api_key=API_KEY)
+client = OpenAI(api_key=API_TOKEN)
 
 # Step 1: Create an Assistant
 my_assistant = client.beta.assistants.create(
