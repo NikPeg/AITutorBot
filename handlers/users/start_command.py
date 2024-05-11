@@ -93,10 +93,6 @@ async def answer_on_question(message: types.Message, state: FSMContext):
 evaluates_ = {}
 
 
-def func():
-    pass
-
-
 @dp.message_handler(state=User_.task)
 async def usertask_handler(message: types.Message, state: FSMContext):
     global evaluates_
@@ -114,7 +110,7 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     # info = evaluate_answer(title, numb, message.text)
     thread = proxy.create_thread()
     proxy.add_message(thread, message.text)
-    info = await proxy.get_answer(thread, func)
+    info = await proxy.get_answer(thread)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
     await bot.send_message(teacher_id, f"{info}", reply_markup=t_check_markup(message.chat.id, numb))

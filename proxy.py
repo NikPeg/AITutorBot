@@ -10,7 +10,8 @@ class GPTProxy:
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         file_id = self.upload_file("apple.docx")
-        self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        # self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        self.assistant_id = "asst_rlBcham3icvPpcgnEWmqJf86"
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
@@ -20,7 +21,7 @@ class GPTProxy:
             purpose=purpose,
         )
         print(result.id)
-        # file_id = "file-w5QGfWSaEQdwqu2cuWVr7mTm"
+        # file_id = "file-HQlxQDYyARK95tSyjf3vSjBC"
         return result.id
 
     def create_assistant(self, name, instructions, file_ids):
@@ -32,7 +33,7 @@ class GPTProxy:
             file_ids=file_ids,
         )
         print("assistant_id:", assistant.id)
-        # assistant_id = "asst_V5QY8jxpRjP1CD8mIix7SeVo"
+        # assistant_id = "asst_rlBcham3icvPpcgnEWmqJf86"
         return assistant.id
 
     async def add_message(self, thread_id, user_question):
@@ -47,13 +48,14 @@ class GPTProxy:
         thread = self.client.beta.threads.create()
         return thread.id
 
-    async def get_answer(self, thread_id, func):
+    async def get_answer(self, thread_id, func=None):
         run = await self.aclient.beta.threads.runs.create(
             thread_id=thread_id,
             assistant_id=self.assistant_id,
         )
         while True:
-            await func()
+            if func:
+                await func()
             run_info = await self.aclient.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run.id)
             if run_info.completed_at:
                 break
