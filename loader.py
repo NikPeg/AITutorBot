@@ -2,7 +2,7 @@ import sqlite3
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from . import proxy
+import proxy
 from data import config
 
 
