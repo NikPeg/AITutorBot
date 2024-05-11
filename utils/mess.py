@@ -29,7 +29,7 @@ def question_mess(numb):
 
 
 def teach_recive(user_name, numb, text):
-    return f"🤩Студент {user_name} прислал ответ на задание {numb}:{text}"
+    return f"🤩Студент {user_name} прислал ответ на задание {numb}: {text}"
 
 
 ii_check = "🧠Результат проверки ИИ :"
