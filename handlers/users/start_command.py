@@ -2,7 +2,6 @@ import asyncio
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-
 from data.config import get_files_count, ref_info, ref_title, teach_ref, teachers_id
 from database.user_db import (
     add_new_user,
@@ -15,7 +14,7 @@ from database.user_db import (
     get_user_ref,
 )
 from keyboards.user_keyboards import *
-from loader import bot, dp
+from loader import bot, dp, proxy
 from states.User import User_
 from utils.mess import *
 
@@ -94,6 +93,10 @@ async def answer_on_question(message: types.Message, state: FSMContext):
 evaluates_ = {}
 
 
+def func():
+    pass
+
+
 @dp.message_handler(state=User_.task)
 async def usertask_handler(message: types.Message, state: FSMContext):
     global evaluates_
@@ -108,7 +111,10 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     user_name = get_student_name(message.chat.id)
     mess = await bot.send_message(teacher_id, teach_recive(user_name, numb, message.text))
     add_new_work(message.chat.id, mess.message_id, numb)
-    info = evaluate_answer(title, numb, message.text)
+    # info = evaluate_answer(title, numb, message.text)
+    thread = proxy.create_thread()
+    proxy.add_message(thread, message.text)
+    info = await proxy.get_answer(thread, func)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
     await bot.send_message(teacher_id, f"{info}", reply_markup=t_check_markup(message.chat.id, numb))
