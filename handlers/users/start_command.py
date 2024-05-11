@@ -109,7 +109,7 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     add_new_work(message.chat.id, mess.message_id, numb)
     # info = evaluate_answer(title, numb, message.text)
     thread = proxy.create_thread()
-    proxy.add_message(thread, message.text)
+    await proxy.add_message(thread, message.text)
     info = await proxy.get_answer(thread)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
