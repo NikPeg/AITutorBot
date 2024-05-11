@@ -11,7 +11,7 @@ from database.user_db import (
     get_all_taken_user_info,
     get_student_name,
     get_user_info,
-    get_user_ref,
+    get_user_ref, check_user,
 )
 from keyboards.user_keyboards import *
 from loader import bot, dp, proxy

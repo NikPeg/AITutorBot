@@ -18,7 +18,7 @@ def add_new_work(user_id, link, numb):
 
 
 def check_name_in_file(name):
-    with open("студенты.txt", "r", encoding="utf_8_sig") as file:
+    with open("students.txt", "r", encoding="utf_8_sig") as file:
         for line in file:
             if name in line.lower():
                 return True
