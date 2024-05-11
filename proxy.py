@@ -1,5 +1,5 @@
 import openai
-from . import prompts
+import prompts
 from data.config import ADMIN
 from openai import OpenAI, AsyncOpenAI
 import time
