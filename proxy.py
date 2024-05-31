@@ -9,9 +9,9 @@ class GPTProxy:
     def __init__(self, token, model="gpt-4-0125-preview", bot=None):
         self.client = openai.OpenAI(api_key=token)
         self.model = model
-        file_id = self.upload_file("info/task1.docx")
-        self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
-        # self.assistant_id = "asst_VU7qla6AwkAIk7W3vwqLZn8s"
+        # file_id = self.upload_file("info/task1.docx")
+        # self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        self.assistant_id = "asst_4AZN1qHjNYgejyoGJFnOy1Wx"
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
