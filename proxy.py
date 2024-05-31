@@ -13,8 +13,8 @@ class GPTProxy:
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         file_id = self.upload_file("info/task1.docx")
-        # self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
-        self.assistant_id = "asst_donCCxfRlmPDOKwyZZ4O7gVj"
+        self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        # self.assistant_id = "asst_donCCxfRlmPDOKwyZZ4O7gVj"
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
