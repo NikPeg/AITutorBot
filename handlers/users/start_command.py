@@ -3,6 +3,8 @@ import asyncio
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from data.config import get_files_count, ref_info, ref_title, teach_ref, teachers_id
+
+from common.utils import send_big_message
 from database.user_db import (
     add_new_user,
     add_new_work,
@@ -111,7 +113,7 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     info = await proxy.get_answer(thread)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
-    await bot.send_message(teacher_id, f"{info}", reply_markup=t_check_markup(message.chat.id, numb))
+    await send_big_message(bot, teacher_id, info, reply_markup=t_check_markup(message.chat.id, numb))
 
 
 @dp.callback_query_handler(text_startswith="allow_", state="*")
