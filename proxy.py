@@ -1,8 +1,11 @@
-import openai
-import prompts
-from data.config import ADMIN
-from openai import OpenAI, AsyncOpenAI
 import time
+
+import openai
+from openai import AsyncOpenAI
+from openai.types.beta.assistant_create_params import ToolResources, ToolResourcesFileSearch, \
+    ToolResourcesFileSearchVectorStore
+
+import prompts
 
 
 class GPTProxy:
@@ -30,7 +33,8 @@ class GPTProxy:
             name=name,
             tools=[{"type": "code_interpreter"}, {"type": "file_search"}],
             instructions=instructions,
-            tool_resources={"file_search": file_ids},
+            tool_resources=ToolResources(file_search=ToolResourcesFileSearch(vector_stores=[
+                ToolResourcesFileSearchVectorStore(file_ids=file_ids)])),
         )
         print("assistant_id:", assistant.id)
         return assistant.id
