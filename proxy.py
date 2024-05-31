@@ -10,8 +10,8 @@ class GPTProxy:
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         # file_id = self.upload_file("info/task1.docx")
-        # self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
-        self.assistant_id = "asst_4AZN1qHjNYgejyoGJFnOy1Wx"
+        self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        # self.assistant_id = "asst_4AZN1qHjNYgejyoGJFnOy1Wx"
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
@@ -28,12 +28,11 @@ class GPTProxy:
         assistant = self.client.beta.assistants.create(
             model=self.model,
             name=name,
-            tools=[{"type": "retrieval"}],
+            tools=[{"type": "code_interpreter"}, {"type": "file_search"}],
             instructions=instructions,
             file_ids=file_ids,
         )
         print("assistant_id:", assistant.id)
-        # assistant_id = "asst_rlBcham3icvPpcgnEWmqJf86"
         return assistant.id
 
     async def add_message(self, thread_id, user_question):
