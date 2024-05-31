@@ -6,7 +6,7 @@ import time
 
 
 class GPTProxy:
-    def __init__(self, token, model="gpt-4-0125-preview", bot=None):
+    def __init__(self, token, model="gpt-4o", bot=None):
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         file_id = self.upload_file("info/task1.docx")
@@ -30,7 +30,7 @@ class GPTProxy:
             name=name,
             tools=[{"type": "code_interpreter"}, {"type": "file_search"}],
             instructions=instructions,
-            file_ids=file_ids,
+            tool_resources={"file_search": file_ids},
         )
         print("assistant_id:", assistant.id)
         return assistant.id
