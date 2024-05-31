@@ -99,22 +99,19 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         numb = data["numb"]
     await state.finish()
-    from gpt_func import evaluate_answer
-
     ref = get_user_ref(message.chat.id)
     teacher_id = teach_ref[ref]
-    title = ref_title[ref]
     user_name = get_student_name(message.chat.id)
     mess = await bot.send_message(teacher_id, teach_recive(user_name, numb, message.text))
+    await bot.send_message(message.chat.id, check_t)
+
     add_new_work(message.chat.id, mess.message_id, numb)
-    # info = evaluate_answer(title, numb, message.text)
     thread = proxy.create_thread()
     await proxy.add_message(thread, message.text)
     info = await proxy.get_answer(thread)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
     await bot.send_message(teacher_id, f"{info}", reply_markup=t_check_markup(message.chat.id, numb))
-    await bot.send_message(message.chat.id, check_t)
 
 
 @dp.callback_query_handler(text_startswith="allow_", state="*")
