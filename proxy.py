@@ -6,23 +6,23 @@ import time
 
 
 class GPTProxy:
-    def __init__(self, token, model="gpt-4-turbo", bot=None):
+    def __init__(self, token, model="gpt-4-0125-preview", bot=None):
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         file_id = self.upload_file("info/task1.docx")
         self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
-        # self.assistant_id = "asst_rlBcham3icvPpcgnEWmqJf86"
+        # self.assistant_id = "asst_VU7qla6AwkAIk7W3vwqLZn8s"
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
     def upload_file(self, path, purpose="assistants"):
-        result = self.client.files.create(
-            file=open(path, "rb"),
-            purpose=purpose,
-        )
-        print(result.id)
-        # file_id = "file-HQlxQDYyARK95tSyjf3vSjBC"
-        return result.id
+        # result = self.client.files.create(
+        #     file=open(path, "rb"),
+        #     purpose=purpose,
+        # )
+        # print(result.id)
+        return "file-cHcCruOy41OWwCEEqCjvWm3G"
+        # return result.id
 
     def create_assistant(self, name, instructions, file_ids):
         assistant = self.client.beta.assistants.create(
