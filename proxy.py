@@ -8,14 +8,14 @@ from openai.types.beta.assistant_create_params import ToolResources, ToolResourc
 import prompts
 
 try:
-    from config import ASSISTANT_ID
+    from data.config import ASSISTANT_ID
 except ImportError:
     ASSISTANT_ID = None
 except AttributeError:
     ASSISTANT_ID = None
 
 try:
-    from config import FILE_ID
+    from data.config import FILE_ID
 except ImportError:
     FILE_ID = None
 except AttributeError:
