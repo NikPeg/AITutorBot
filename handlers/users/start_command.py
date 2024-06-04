@@ -95,7 +95,7 @@ async def answer_on_question(message: types.Message, state: FSMContext):
 evaluates_ = {}
 
 
-@dp.message_handler(state=User_.task)
+@dp.message_handler(content_types=['photo', 'text', 'document'], state=User_.task)
 async def usertask_handler(message: types.Message, state: FSMContext):
     global evaluates_
     async with state.proxy() as data:
