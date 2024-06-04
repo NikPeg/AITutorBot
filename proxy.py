@@ -70,7 +70,7 @@ class GPTProxy:
                             "text": user_question,
                             "type": "text",
                         },
-                    ] + [
+                    ] if user_question else [] + [
                         {
                             "type": "image_file",
                             "image_file": {
