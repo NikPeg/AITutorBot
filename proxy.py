@@ -43,7 +43,6 @@ class GPTProxy:
             purpose=purpose,
         )
         print(result.id)
-        # return "file-cHcCruOy41OWwCEEqCjvWm3G"
         return result.id
 
     def create_assistant(self, name, instructions, file_ids):
@@ -58,13 +57,28 @@ class GPTProxy:
         print("assistant_id:", assistant.id)
         return assistant.id
 
-    async def add_message(self, thread_id, user_question):
-        message = await self.aclient.beta.threads.messages.create(
+    async def add_message(self, thread_id, user_question=" ", photo_paths=None, file_paths=None):
+        photo_paths = [] if not photo_paths else photo_paths
+        file_paths = [] if not file_paths else file_paths
+        await self.aclient.beta.threads.messages.create(
             thread_id=thread_id,
+            content=[
+                        {
+                            "text": user_question,
+                            "type": "text",
+                        },
+                    ] + [
+                        {
+                            "type": "image_file",
+                            "image_file": {
+                                "file_id": self.upload_file(path, "vision"),
+                                "detail": "low",
+                            }
+                        } for path in photo_paths
+                    ] or " ",
             role="user",
-            content= user_question
+            attachments=[{"file_id": self.upload_file(path), "tools": [{"type": "file_search"}]} for path in file_paths],
         )
-        return message
 
     def create_thread(self):
         thread = self.client.beta.threads.create()

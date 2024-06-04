@@ -105,12 +105,26 @@ async def usertask_handler(message: types.Message, state: FSMContext):
     teacher_id = teach_ref[ref]
     user_name = get_student_name(message.chat.id)
     mess = await bot.send_message(teacher_id, teach_recive(user_name, numb))
-    await send_big_message(bot, teacher_id, message.text)
+    await bot.forward_message(teacher_id, message.chat.id, message.message_id)
     await bot.send_message(message.chat.id, check_t)
 
     add_new_work(message.chat.id, mess.message_id, numb)
     thread = proxy.create_thread()
-    await proxy.add_message(thread, message.text)
+
+    photo_paths = []
+    file_paths = []
+    files_dir = f"files/"
+    request_text = message.text
+    if message.content_type == "photo":
+        file = await message.photo[-1].download(destination_dir=files_dir)
+        photo_paths.append(file.name)
+        request_text = message.caption
+    elif message.content_type == "document":
+        file = await message.document.download(destination_dir=files_dir)
+        file_paths.append(file.name)
+        request_text = message.caption
+
+    await proxy.add_message(thread, request_text, photo_paths or None, file_paths or None)
     info = await proxy.get_answer(thread)
     evaluates_[teacher_id] = info
     await bot.send_message(teacher_id, ii_check)
