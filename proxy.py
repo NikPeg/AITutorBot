@@ -61,6 +61,8 @@ class GPTProxy:
         print("add mess")
         photo_paths = [] if not photo_paths else photo_paths
         file_paths = [] if not file_paths else file_paths
+        print("user_question")
+        print(user_question)
         await self.aclient.beta.threads.messages.create(
             thread_id=thread_id,
             content=[
