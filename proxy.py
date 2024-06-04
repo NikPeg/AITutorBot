@@ -7,25 +7,44 @@ from openai.types.beta.assistant_create_params import ToolResources, ToolResourc
 
 import prompts
 
+try:
+    from config import ASSISTANT_ID
+except ImportError:
+    ASSISTANT_ID = None
+except AttributeError:
+    ASSISTANT_ID = None
+
+try:
+    from config import FILE_ID
+except ImportError:
+    FILE_ID = None
+except AttributeError:
+    FILE_ID = None
+
 
 class GPTProxy:
     def __init__(self, token, model="gpt-4o", bot=None):
         self.client = openai.OpenAI(api_key=token)
         self.model = model
-        file_id = self.upload_file("info/task1.docx")
-        # self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
-        self.assistant_id = "asst_0aujwATfRM1u3U42GGg7BUr9"
+        if not FILE_ID:
+            file_id = self.upload_file("info/task1.docx")
+        else:
+            file_id = FILE_ID
+        if not ASSISTANT_ID:
+            self.assistant_id = self.create_assistant("ai tutor", prompts.TUTOR, [file_id])
+        else:
+            self.assistant_id = ASSISTANT_ID
         self.bot = bot
         self.aclient = AsyncOpenAI(api_key=token)
 
     def upload_file(self, path, purpose="assistants"):
-        # result = self.client.files.create(
-        #     file=open(path, "rb"),
-        #     purpose=purpose,
-        # )
-        # print(result.id)
-        return "file-cHcCruOy41OWwCEEqCjvWm3G"
-        # return result.id
+        result = self.client.files.create(
+            file=open(path, "rb"),
+            purpose=purpose,
+        )
+        print(result.id)
+        # return "file-cHcCruOy41OWwCEEqCjvWm3G"
+        return result.id
 
     def create_assistant(self, name, instructions, file_ids):
         assistant = self.client.beta.assistants.create(
