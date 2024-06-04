@@ -58,6 +58,7 @@ class GPTProxy:
         return assistant.id
 
     async def add_message(self, thread_id, user_question=" ", photo_paths=None, file_paths=None):
+        print("add mess")
         photo_paths = [] if not photo_paths else photo_paths
         file_paths = [] if not file_paths else file_paths
         await self.aclient.beta.threads.messages.create(

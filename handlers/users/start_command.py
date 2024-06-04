@@ -120,6 +120,7 @@ async def usertask_handler(message: types.Message, state: FSMContext):
         photo_paths.append(file.name)
         request_text = message.caption
     elif message.content_type == "document":
+        print("document!")
         file = await message.document.download(destination_dir=files_dir)
         file_paths.append(file.name)
         request_text = message.caption
