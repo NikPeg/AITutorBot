@@ -27,7 +27,7 @@ class GPTProxy:
         self.client = openai.OpenAI(api_key=token)
         self.model = model
         if not FILE_ID:
-            file_id = self.upload_file("info/task1.docx")
+            file_id = self.upload_file("info/only_task1.docx")
         else:
             file_id = FILE_ID
         if not ASSISTANT_ID:
