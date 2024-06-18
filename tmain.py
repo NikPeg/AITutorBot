@@ -18,7 +18,7 @@ async def set_default_commands(dp):
 
 
 async def on_startup(dispatcher):
-    await bot.send_message(config.ADMIN_ID, mess.BOT_STARTED.format(config.INSTANCE_NAME))
+    await bot.send_message(config.ADMIN_ID, mess.BOT_STARTED)
     await set_default_commands(dispatcher)
 
 
