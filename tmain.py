@@ -1,5 +1,5 @@
 import logging
-
+import asyncio
 from data import config
 from aiogram import executor
 from aiogram import types
@@ -17,10 +17,19 @@ async def set_default_commands(dp):
     ])
 
 
+FEEDBACK_PERIOD = 24 * 60 * 60
+
+
+async def start_feed_back():
+    while True:
+        await asyncio.sleep(FEEDBACK_PERIOD)
+
+
 async def on_startup(dispatcher):
     await bot.send_message(config.ADMIN_ID, mess.BOT_STARTED)
     await set_default_commands(dispatcher)
+    asyncio.create_task(start_feed_back())
 
 
 if __name__ == "__main__":
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, on_startup=on_startup, skip_updates=True)
