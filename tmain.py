@@ -1,6 +1,6 @@
 import logging
 
-import config
+from data import config
 from aiogram import executor
 from aiogram import types
 
